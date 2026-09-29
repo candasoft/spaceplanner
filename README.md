@@ -7,6 +7,8 @@ and export a layout sheet / cost quote as PDF.
 Originally a single `index.html` file; now a properly structured Vite project
 with ES modules and npm-managed dependencies.
 
+**Live demo:** https://candasoft.github.io/spaceplanner/ (auto-deployed from `main` via GitHub Actions)
+
 ## Features
 
 - **3D room** (Three.js) with walls, windows, baseboards and wood floor
