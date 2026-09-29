@@ -1,4 +1,4 @@
-# Atelier — Commercial Space Planner
+# Eventory — Commercial Space Planner
 
 A 3D commercial space planner: pick a template, place furniture on the floor,
 re-brand the whole room with one color, check capacity & fire egress compliance,

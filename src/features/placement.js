@@ -3,7 +3,7 @@ import { scene, container, camera, renderer } from '../three/scene.js';
 import { getFloor } from '../three/room.js';
 import { state } from '../core/state.js';
 import { roomDims, PLACEMENT_MARGIN } from '../core/constants.js';
-import { ITEM_CATALOG, BOOTH_STATUS_COLORS, setBoothDeskColor } from './catalog.js';
+import { ITEM_CATALOG, BOOTH_STATUS_COLORS, setBoothDeskColor, setBoothName } from './catalog.js';
 import { updateStats } from './stats.js';
 import { showToast } from './toast.js';
 import { markDirty } from '../core/dirty.js';
@@ -87,6 +87,12 @@ export function placeItem(type, position, rotY = 0, opts = {}) {
   // Booth desk color from a saved project (null = default black)
   const deskColor = opts.deskColor || null;
   if (deskColor) setBoothDeskColor(mesh, deskColor);
+  // Booth name for the wall/floor signage: a saved project restores its
+  // custom name; new booths get an auto-numbered default ("Booth 1", …).
+  const boothName = opts.boothName ?? (type === 'booth'
+    ? `Booth ${state.placedItems.filter(i => i.type === 'booth').length + 1}`
+    : null);
+  if (boothName) setBoothName(mesh, boothName);
   if (!available) {
     mesh.traverse(c => {
       if (c.isMesh && c.userData.boothFascia) c.material.color.set(BOOTH_STATUS_COLORS.occupied);
@@ -113,6 +119,7 @@ export function placeItem(type, position, rotY = 0, opts = {}) {
     scale: { x: sx, z: sz },
     available, // booth availability status (booths only, rest unused)
     deskColor, // booth desk color (booths only, rest null)
+    boothName, // wall/floor signage name (booths only, rest null)
   };
   mesh.userData.placedId = placed.id;
   state.placedItems.push(placed);

@@ -3,7 +3,7 @@ import { scene, container, camera, renderer, controls, onFrame } from '../three/
 import { getFloor } from '../three/room.js';
 import { state } from '../core/state.js';
 import { roomDims, PLACEMENT_MARGIN } from '../core/constants.js';
-import { ITEM_CATALOG, BOOTH_STATUS_COLORS, BOOTH_DESK_DEFAULT, setBoothDeskColor } from './catalog.js';
+import { ITEM_CATALOG, BOOTH_STATUS_COLORS, BOOTH_DESK_DEFAULT, setBoothDeskColor, setBoothName } from './catalog.js';
 import { getItemById, itemFootprint, removeItem, clampCenter, rotatedHalfExtents, fitItemInsideRoom } from './placement.js';
 import { showToast } from './toast.js';
 import { markDirty } from '../core/dirty.js';
@@ -37,6 +37,8 @@ const deskRow = document.getElementById('inspDeskRow');
 const deskInput = document.getElementById('inspDeskColor');
 const deskWrap = document.getElementById('inspDeskWrap');
 const deskSwatches = Array.from(document.querySelectorAll('#inspDeskRow .desk-swatch'));
+const boothNameRow = document.getElementById('inspBoothNameRow');
+const boothNameInput = document.getElementById('inspBoothName');
 
 function raycastAt(e, targets, recursive) {
   const rect = renderer.domElement.getBoundingClientRect();
@@ -116,8 +118,12 @@ function syncInspector() {
   if (document.activeElement !== dimW) dimW.value = w.toFixed(1);
   if (document.activeElement !== dimD) dimD.value = d.toFixed(1);
 
-  // Booth status row — only for items that carry a status fascia
+  // Booth status + name rows — only for items that carry a status fascia
   const fascia = getFasciaMesh(selected);
+  boothNameRow.classList.toggle('hidden', !fascia);
+  if (fascia && document.activeElement !== boothNameInput) {
+    boothNameInput.value = selected.boothName || '';
+  }
   if (fascia) {
     statusRow.classList.remove('hidden');
     const available = selected.available !== false;
@@ -268,6 +274,23 @@ deskSwatches.forEach(sw => sw.addEventListener('click', () => {
 }));
 // Live preview while the native color picker is open (matches brand.js)
 deskInput.addEventListener('input', () => applyDeskColor(deskInput.value));
+
+// ---------- Booth name (wall + floor signage) ----------
+boothNameInput.addEventListener('input', () => {
+  if (!selected) return;
+  selected.boothName = boothNameInput.value;
+  setBoothName(selected.mesh, boothNameInput.value);
+  markDirty();
+});
+boothNameInput.addEventListener('change', () => {
+  if (!selected) return;
+  const trimmed = boothNameInput.value.trim().slice(0, 24);
+  boothNameInput.value = trimmed;
+  selected.boothName = trimmed;
+  setBoothName(selected.mesh, trimmed);
+  markDirty();
+  showToast(trimmed ? `Booth renamed to "${trimmed}"` : 'Booth name cleared', 'fa-tag');
+});
 
 // ---------- Rotate / delete / close ----------
 rotateBtn.addEventListener('click', () => {

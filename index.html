@@ -21,7 +21,7 @@
           </svg>
         </div>
         <div>
-          <div class="font-display font-bold text-[15px] leading-none">Atelier</div>
+          <div class="font-display font-bold text-[15px] leading-none">Eventory</div>
           <div class="text-[9px] tracking-[0.18em] uppercase mt-0.5" style="color: var(--charcoal-3);">Space Planner</div>
         </div>
       </div>
@@ -193,6 +193,11 @@
             <div class="text-[10px] font-mono mt-0.5" style="color: var(--charcoal-3);" id="inspType">$0</div>
           </div>
           <button class="btn-icon btn" id="inspClose" title="Deselect"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+        </div>
+        <div id="inspBoothNameRow" class="hidden">
+          <div class="text-[9px] uppercase tracking-[0.14em] mb-1.5" style="color: var(--charcoal-3);">Booth Name</div>
+          <input type="text" id="inspBoothName" class="booth-name-input" maxlength="24"
+                 placeholder="e.g. Acme Corp" autocomplete="off" spellcheck="false">
         </div>
         <div class="text-[9px] uppercase tracking-[0.14em] mb-1.5" style="color: var(--charcoal-3);">Dimensions · m</div>
         <div class="flex items-center gap-1.5 mb-2.5">

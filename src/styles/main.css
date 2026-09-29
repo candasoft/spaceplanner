@@ -108,6 +108,18 @@ body {
 .dim-input:hover { border-color: var(--oat-dark); }
 .dim-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
+/* Booth name input (item inspector) */
+.booth-name-input {
+  width: 100%; padding: 5px 8px; margin-bottom: 10px;
+  font-family: 'Manrope Variable', 'Manrope', sans-serif;
+  font-size: 12px; color: var(--charcoal);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 7px;
+  outline: none; transition: border-color 0.18s, box-shadow 0.18s;
+}
+.booth-name-input::placeholder { color: var(--charcoal-3); opacity: 0.7; }
+.booth-name-input:hover { border-color: var(--oat-dark); }
+.booth-name-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
 /* Capacity meter */
 .meter { height: 6px; background: var(--oat-light); border-radius: 3px; overflow: hidden; position: relative; }
 .meter-fill {

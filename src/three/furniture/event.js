@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { state } from '../../core/state.js';
+import { makeTextSign } from '../textSign.js';
 
 /**
  * Event & exhibition infrastructure: booths, registration, staging,
@@ -52,6 +53,24 @@ export function makeBooth() {
   counterTop.userData.boothDesk = true; g.add(counterTop);
   const strip = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.08, 0.02), brand(0.5));
   strip.position.set(0, 0.55, 1.21); strip.userData.brand = true; g.add(strip);
+  // Name signage — a plaque on the back wall and a decal on the booth's
+  // floor area. Both start hidden; `setBoothName` (catalog.js) pushes the
+  // current name into each sign via the `boothSign` update fn on userData.
+  const wallSign = makeTextSign({
+    width: 2.6, height: 0.55,
+    plaque: '#2A2826', color: '#F5F1EA',
+  });
+  wallSign.mesh.position.set(0, 1.4, -1.40); // 0.02 in front of the wall face
+  wallSign.mesh.userData.boothSign = wallSign.update;
+  g.add(wallSign.mesh);
+  const floorSign = makeTextSign({
+    width: 2.4, height: 0.6,
+    color: '#F5F1EA', stroke: '#1A1917',
+  });
+  floorSign.mesh.rotation.x = -Math.PI / 2; // lie flat, text reads from the front
+  floorSign.mesh.position.set(0, 0.012, 0); // just above the floor, footprint center
+  floorSign.mesh.userData.boothSign = floorSign.update;
+  g.add(floorSign.mesh);
   return g;
 }
 

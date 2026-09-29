@@ -46,3 +46,16 @@ export function setBoothDeskColor(mesh, color) {
     if (c.isMesh && c.userData.boothDesk) c.material.color.set(color);
   });
 }
+
+/**
+ * Push a booth's name into its wall + floor signage meshes.
+ * Each sign stores its canvas redraw fn on `userData.boothSign`
+ * (see three/textSign.js); an empty/whitespace name hides both signs.
+ */
+export function setBoothName(mesh, name) {
+  mesh.traverse(c => {
+    if (c.isMesh && typeof c.userData.boothSign === 'function') {
+      c.userData.boothSign(name);
+    }
+  });
+}

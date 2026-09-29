@@ -76,6 +76,7 @@ function serializeCurrent() {
       sz: round3(i.scale.z),
       available: i.available !== false,
       deskColor: i.deskColor || null,
+      boothName: i.boothName ?? null, // keeps '' (cleared) distinct from unset
     })),
   };
 }
@@ -148,6 +149,7 @@ export function openProject(id) {
       scale: { x: it.sx ?? 1, z: it.sz ?? 1 },
       available: it.available,
       deskColor: it.deskColor,
+      boothName: it.boothName,
     });
   });
   state.template = p.template || '';
