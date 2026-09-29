@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eventory — Furniture Prices</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script type="module" src="/src/pages/prices.js"></script>
+<style>
+  /* main.css (loaded after this inline block) locks html/body to 100% height
+     with overflow:hidden for the planner. These overrides use a higher
+     specificity (html body = 0,0,2 vs body = 0,0,1) so they win regardless
+     of stylesheet order, letting this page scroll. */
+  html body { height: auto; min-height: 100%; overflow: visible; }
+
+  .pp-header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+  }
+  .pp-header-inner {
+    max-width: 820px; margin: 0 auto; padding: 14px 20px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .pp-main { max-width: 820px; margin: 0 auto; padding: 24px 20px 60px; }
+
+  .pp-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--surface); margin-bottom: 8px; transition: border-color 0.15s;
+  }
+  .pp-row:hover { border-color: var(--oat-dark); }
+  .pp-icon {
+    width: 38px; height: 38px; border-radius: 9px; background: var(--bg-2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--charcoal); flex-shrink: 0;
+  }
+  .pp-badge {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent);
+    background: var(--accent-soft); padding: 3px 8px; border-radius: 99px;
+    flex-shrink: 0;
+  }
+  .pp-input-wrap {
+    display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px 10px; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .pp-input-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .pp-input {
+    width: 88px; border: none; background: transparent; outline: none;
+    font-family: 'JetBrains Mono Variable', monospace;
+    font-size: 13px; font-weight: 600; color: var(--charcoal); padding: 0;
+  }
+  /* Hide number spinners for a cleaner look */
+  .pp-input::-webkit-outer-spin-button, .pp-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .pp-input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+</style>
+</head>
+<body>
+
+<header class="pp-header">
+  <div class="pp-header-inner">
+    <a class="btn" href="./index.html">
+      <i class="fa-solid fa-arrow-left text-[11px]"></i><span>Back to planner</span>
+    </a>
+    <div class="flex-1 min-w-0">
+      <div class="font-display font-bold text-[16px] leading-tight">Furniture Prices</div>
+      <div class="text-[11px] mt-0.5" style="color: var(--charcoal-3);">
+        Define the unit price of each piece — used by the library, live costing and PDF export
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-[11px]" style="color: var(--charcoal-3);" id="customCount"></span>
+      <button class="btn" id="resetAll">
+        <i class="fa-solid fa-arrow-rotate-left text-[11px]"></i><span>Reset all</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="pp-main">
+  <div class="text-[11px] mb-3 leading-relaxed" style="color: var(--charcoal-3);">
+    Prices are saved automatically in this browser. Setting a price back to its
+    default value removes the override. Already-placed items keep the price
+    they had when they were placed — reopen your project after changing prices.
+  </div>
+  <div id="priceList"></div>
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fa-solid fa-circle-info"></i><span id="toastMsg"></span></div>
+
+</body>
+</html>
