@@ -64,7 +64,7 @@ export function makeBooth() {
   wallSign.mesh.userData.boothSign = wallSign.update;
   g.add(wallSign.mesh);
   const floorSign = makeTextSign({
-    width: 2.4, height: 0.6,
+    width: 2.4, height: 0.9,
     color: '#F5F1EA', stroke: '#1A1917',
   });
   floorSign.mesh.rotation.x = -Math.PI / 2; // lie flat, text reads from the front

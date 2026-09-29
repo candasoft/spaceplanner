@@ -61,8 +61,9 @@ export function makeTextSign({
       ctx.fill();
     }
 
-    // Fit the text to ~86% of the usable width
-    let size = Math.floor(h * 0.5);
+    // Fit the text to ~86% of the usable width — starts big (68% of the
+    // sign height) so labels stay readable from the top-down view
+    let size = Math.floor(h * 0.68);
     ctx.font = `${weight} ${size}px ${font}`;
     const maxWidth = (w - pad * 2) * 0.94;
     const measured = ctx.measureText(text).width;
