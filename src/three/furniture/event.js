@@ -53,19 +53,20 @@ export function makeBooth() {
   counterTop.userData.boothDesk = true; g.add(counterTop);
   const strip = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.08, 0.02), brand(0.5));
   strip.position.set(0, 0.55, 1.21); strip.userData.brand = true; g.add(strip);
-  // Name signage — a plaque on the back wall and a decal on the booth's
-  // floor area. Both start hidden; `setBoothName` (catalog.js) pushes the
-  // current name into each sign via the `boothSign` update fn on userData.
+  // Name signage — the booth name on the back wall and as a decal on the
+  // booth's floor area (both plain black text: the oat wall and light floor
+  // give strong contrast). Both start hidden; `setBoothName` (catalog.js)
+  // pushes the current name into each sign via the `boothSign` update fn.
   const wallSign = makeTextSign({
     width: 2.6, height: 0.55,
-    plaque: '#2A2826', color: '#F5F1EA',
+    color: '#000000',
   });
   wallSign.mesh.position.set(0, 1.4, -1.40); // 0.02 in front of the wall face
   wallSign.mesh.userData.boothSign = wallSign.update;
   g.add(wallSign.mesh);
   const floorSign = makeTextSign({
-    width: 2.4, height: 0.9,
-    color: '#F5F1EA', stroke: '#1A1917',
+    width: 2.6, height: 1.2,
+    color: '#000000',
   });
   floorSign.mesh.rotation.x = -Math.PI / 2; // lie flat, text reads from the front
   floorSign.mesh.position.set(0, 0.012, 0); // just above the floor, footprint center

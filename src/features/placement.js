@@ -88,9 +88,9 @@ export function placeItem(type, position, rotY = 0, opts = {}) {
   const deskColor = opts.deskColor || null;
   if (deskColor) setBoothDeskColor(mesh, deskColor);
   // Booth name for the wall/floor signage: a saved project restores its
-  // custom name; new booths get an auto-numbered default ("Booth 1", …).
+  // custom name; new booths get an auto-numbered default ("B1", "B2", …).
   const boothName = opts.boothName ?? (type === 'booth'
-    ? `Booth ${state.placedItems.filter(i => i.type === 'booth').length + 1}`
+    ? `B${state.placedItems.filter(i => i.type === 'booth').length + 1}`
     : null);
   if (boothName) setBoothName(mesh, boothName);
   if (!available) {

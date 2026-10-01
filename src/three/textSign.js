@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 /**
  * A flat plane that renders text from a 2D canvas — used for booth signage
- * (wall plaque + floor decal). No extra font files: it draws with the CSS
+ * (wall label + floor decal). No extra font files: it draws with the CSS
  * fonts already loaded on the page (Archivo Variable).
  *
  * Returns { mesh, update(name) }:
@@ -61,9 +61,9 @@ export function makeTextSign({
       ctx.fill();
     }
 
-    // Fit the text to ~86% of the usable width — starts big (68% of the
+    // Fit the text to ~94% of the usable width — starts big (75% of the
     // sign height) so labels stay readable from the top-down view
-    let size = Math.floor(h * 0.68);
+    let size = Math.floor(h * 0.75);
     ctx.font = `${weight} ${size}px ${font}`;
     const maxWidth = (w - pad * 2) * 0.94;
     const measured = ctx.measureText(text).width;
